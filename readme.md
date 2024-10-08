@@ -1,4 +1,4 @@
-# Build zip file with NPM
+# Build production folder with NPM
 
 To ignore files create `.npmignore` file and add the files to ignore.
 
