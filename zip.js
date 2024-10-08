@@ -5,7 +5,7 @@ const ignore = require('ignore'); // npm package to handle ignore rules
 // Paths
 const folderPath = path.join(__dirname, './'); // Path to the folder to be copied
 const folderName = path.basename(__dirname); // Get the current folder name
-const outputFolderPath = path.join(__dirname, `${folderName}`); // Destination folder
+const outputFolderPath = path.join(__dirname, `../../delivery/${folderName}`); // Destination folder
 
 // Remove the output folder if it already exists
 if (fs.existsSync(outputFolderPath)) {
