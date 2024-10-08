@@ -1,42 +1,51 @@
-const AdmZip = require('adm-zip');
 const path = require('path');
 const fs = require('fs');
 const ignore = require('ignore'); // npm package to handle ignore rules
 
-// Creating archives
-const zip = new AdmZip();
-
-const folderPath = path.join(__dirname, './'); // Path to the folder to be zipped
+// Paths
+const folderPath = path.join(__dirname, './'); // Path to the folder to be copied
 const folderName = path.basename(__dirname); // Get the current folder name
-const outputPath = path.join(__dirname, `${folderName}.zip`); // Use folder name for the zip file
+const outputFolderPath = path.join(__dirname, `${folderName}`); // Destination folder
 
-// Add files and folders recursively
+// Remove the output folder if it already exists
+if (fs.existsSync(outputFolderPath)) {
+    fs.rmSync(outputFolderPath, { recursive: true, force: true });
+    console.log('Existing folder removed:', outputFolderPath);
+}
+
+// Create the output folder
+fs.mkdirSync(outputFolderPath, { recursive: true });
+
+// Initialize ignore rules from .npmignore file
 const ig = ignore().add(fs.readFileSync('.npmignore').toString());
 
-function addFilesFromDirectory(directory) {
-    const files = fs.readdirSync(directory, { withFileTypes: true });
+// Function to copy files and directories recursively
+function copyFilesFromDirectory(source, destination) {
+    const files = fs.readdirSync(source, { withFileTypes: true });
+
     files.forEach(file => {
-        const fullPath = path.join(directory, file.name);
+        const fullPath = path.join(source, file.name);
         const relativePath = path.relative(folderPath, fullPath); // Get relative path
-        if (ig.ignores(relativePath)) return; // Skip ignored files using relative path
+        const destinationPath = path.join(destination, file.name); // Destination file path
+
+        // Skip ignored files or the output folder itself
+        if (ig.ignores(relativePath) || fullPath === outputFolderPath) return;
 
         if (file.isDirectory()) {
-            addFilesFromDirectory(fullPath); // Recurse into directories
+            // Create the directory at the destination
+            if (!fs.existsSync(destinationPath)) {
+                fs.mkdirSync(destinationPath);
+            }
+            // Recurse into directories
+            copyFilesFromDirectory(fullPath, destinationPath);
         } else {
-            const zipPath = path.relative(folderPath, fullPath);
-            zip.addLocalFile(fullPath, path.dirname(zipPath));
+            // Copy file to the destination
+            fs.copyFileSync(fullPath, destinationPath);
         }
     });
 }
 
-addFilesFromDirectory(folderPath);
+// Start copying files
+copyFilesFromDirectory(folderPath, outputFolderPath);
 
-// Write zip file to disk
-zip.writeZip(outputPath, function (err) {
-    if (err) {
-        console.error('Failed to create zip:', err);
-        process.exit(1);
-    } else {
-        console.log('Zip file created successfully at', outputPath);
-    }
-});
+console.log('Folder structure copied successfully to', outputFolderPath);
