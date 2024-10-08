@@ -28,7 +28,7 @@ Note: Thefolder will be created 2 levels up in the delivery folder.
 ### Dependencies:
 
 ```
-  "dependencies": {
+"dependencies": {
     "ignore": "^6.0.2"
 }
 ```
