@@ -7,7 +7,8 @@ const ignore = require('ignore'); // npm package to handle ignore rules
 const zip = new AdmZip();
 
 const folderPath = path.join(__dirname, './'); // Path to the folder to be zipped
-const outputPath = path.join(__dirname, 'output.zip'); // Output zip file
+const folderName = path.basename(__dirname); // Get the current folder name
+const outputPath = path.join(__dirname, `${folderName}.zip`); // Use folder name for the zip file
 
 // Add files and folders recursively
 const ig = ignore().add(fs.readFileSync('.npmignore').toString());

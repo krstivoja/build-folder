@@ -14,3 +14,25 @@ This file is crucial for packaging the project for distribution or deployment.
 ```bash
 npm run build-zip
 ```
+
+Dependencies:
+
+```
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "ignore": "^6.0.2"
+}
+```
+
+Common ignore files:
+
+```
+node_modules/
+src/
+package-lock.json
+.gitignore
+.npmignore
+.git
+zip.js
+readme.md
+```

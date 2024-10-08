@@ -4,16 +4,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "zip": "bestzip --exclude 'node_modules/**/*' --exclude 'src/**/*' --exclude 'package.json' --exclude '.gitignore' output.zip .",
     "build-zip": "node zip.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "bestzip": "^2.2.1"
-  },
+  "devDependencies": {},
   "dependencies": {
     "adm-zip": "^0.5.16",
     "ignore": "^6.0.2"
