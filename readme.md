@@ -1,6 +1,6 @@
 # Build zip file with NPM
 
-To ignore files .create .npmignore file and add the files to ignore.
+To ignore files create `.npmignore` file and add the files to ignore.
 
 ```bash
 npm run folder-4-zip
