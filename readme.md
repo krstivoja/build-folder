@@ -8,6 +8,7 @@ To ignore files create `.npmignore` file and add the files to ignore.
 node_modules/
 src/
 package-lock.json
+package.json
 .gitignore
 .npmignore
 .git
